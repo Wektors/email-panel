@@ -7,12 +7,12 @@
 				<th>Usuń</th>
 			</tr>
 			<tr
-				v-for="{ emailAddress, key }, index in emailList.getEmails"
+				v-for="({ emailAddress, key }, index) in emailList.getEmails"
 				:key="key"
 			>
-				<td> {{ index + 1 }}</td>
-				<td> {{ emailAddress }}</td>
-				
+				<td>{{ index + 1 }}</td>
+				<td>{{ emailAddress }}</td>
+				<button @click="deleteEmail(index)">X</button>
 			</tr>
 		</table>
 		<div>
@@ -24,6 +24,7 @@
 <script>
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
+
 @Component({
 	components: {},
 })
@@ -32,6 +33,11 @@ export default class List extends Vue {
 
 	data() {
 		return {};
+	}
+
+	deleteEmail(index) {
+		this.emailList.deleteEmail(index);
+        console.log(index + " deleted");
 	}
 }
 </script>
