@@ -37,7 +37,6 @@ export default class List extends Vue {
 
 	deleteEmail(index) {
 		this.emailList.deleteEmail(index);
-        console.log(index + " deleted");
 	}
 }
 </script>

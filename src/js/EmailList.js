@@ -23,7 +23,5 @@ export default class EmailList {
 
 	deleteEmail(index) {
 		this.emails.splice(index, index + 1);
-        console.log(index + " deleted");
-
 	}
 }
