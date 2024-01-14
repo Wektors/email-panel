@@ -2,6 +2,7 @@ export default class EmailList {
 	constructor() {
         this.emails = [];
         this.add("wiktor@wiktor.com", "qwerty", 10);
+        this.add("pawel@pawel.com", "qwerty", 10);
     }
 	/**
 	 *

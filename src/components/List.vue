@@ -1,9 +1,22 @@
 <template>
 	<div>
-		<div v-for="{ emailAddress, capacity, key } in emailList.getEmails" :key="key">
-			<div>
-				{{ emailAddress  }} {{ capacity  }}
-			</div>
+		<table>
+			<tr>
+				<th>L.p.</th>
+				<th>adres email</th>
+				<th>Usuń</th>
+			</tr>
+			<tr
+				v-for="{ emailAddress, key }, index in emailList.getEmails"
+				:key="key"
+			>
+				<td> {{ index + 1 }}</td>
+				<td> {{ emailAddress }}</td>
+				
+			</tr>
+		</table>
+		<div>
+			<div></div>
 		</div>
 	</div>
 </template>
