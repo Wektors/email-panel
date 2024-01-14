@@ -1,7 +1,20 @@
 <template>
 	<div>
 		<button @click="triggerPopup()">Dodaj skrzynkę</button>
-		<slot v-if="value === true"> ... </slot>
+		<br />
+		<br />
+		<slot v-if="value === true"> 
+		Email: <input type="text">@<select>
+			<option>wiktor.com</option>
+			<option>pawel.com</option>
+		</select>
+		<br />
+		Hasło: <input type="password"> <button>Generuj hasło</button>
+		<br />
+		Pojemność: <input type="number"> GB
+		</slot>
+		<br />
+		<button>Dodaj</button>
 	</div>
 </template>
 
@@ -17,7 +30,7 @@ export default class Adding extends Vue {
 
 	data() {
 		return {
-			value: false,
+			value: true,
 		};
 	}
 
