@@ -14,6 +14,9 @@
 				<td>{{ emailAddress }}</td>
 				<button @click="deleteEmail(index)">X</button>
 			</tr>
+            <tr v-if="listEmpty">
+                Brak skrzynek e-mail
+            </tr>
 		</table>
 		<div>
 			<div></div>
@@ -34,6 +37,12 @@ export default class List extends Vue {
 	data() {
 		return {};
 	}
+
+    get listEmpty() {
+        if (this.emailList.getEmails.length === 0) {
+            return true
+        } return false
+    }
 
 	deleteEmail(index) {
         alert("Czy na pewno?");
