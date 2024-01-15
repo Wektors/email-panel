@@ -45,10 +45,11 @@ export default class List extends Vue {
     }
 
 	deleteEmail(index) {
-        alert("Czy na pewno?");
+        confirm("Czy na pewno?");
 		this.emailList.deleteEmail(index);
 	}
 }
 </script>
 
 <style scoped></style>
+
