@@ -9,7 +9,7 @@ export default class EmailList {
 		this.emails = [];
 		this.domainList = config.available_domains;
 		this.availableSpace = parseInt(config.available_space_GB);
-		this.usedSpace = 0;
+		this.usedSpace = Storage.load("usedSpace");
 		// this.add("wiktor@wiktor.com", "qwerty", 5);
 		// this.add("pawel@pawel.com", "qwerty", 5);
 	}
@@ -27,6 +27,7 @@ export default class EmailList {
 			Storage.save("usedSpace", this.usedSpace)
 		}
 	}
+
 	get getEmails() {
 		return this.emails;
 	}
@@ -71,4 +72,22 @@ export default class EmailList {
 			return false;
 		}
 	}
+
+	deserializeEmails() {
+		let storageArray = JSON.parse(Storage.load("emails"))
+		console.log(storageArray)
+		let emailList = []
+
+		for (let i = 0; i < storageArray.length; i++) {
+			let newEmail = new Email(
+				storageArray[i].emailAddress,
+				storageArray[i].password,
+				storageArray[i].capacity
+			);
+			emailList.push(newEmail)
+		}
+		
+		this.emails = emailList
+	}
+
 }
