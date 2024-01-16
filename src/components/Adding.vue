@@ -4,13 +4,13 @@
 		<br />
 		<br />
 		<slot v-if="showForm === true">
-			Email: <input type="text" v-model="userName" />@<select v-model="domain">
+			Email: <input type="text" v-model="userName" :class="validationUserName" />@<select v-model="domain">
 				<option v-for="domain in domainList" :key="domain">
 					{{ domain }}
 				</option>
 			</select>
 			<br />
-			Hasło: <input type="password" v-model="password" />
+			Hasło: <input type="password" v-model="password" :class="validationPassword"/>
 			<button>Generuj hasło</button>
 			<br />
 			Pojemność: <input type="number" /> GB
@@ -33,12 +33,28 @@ export default class Adding extends Vue {
 
 	data() {
 		return {
-			showForm: false,
+			showForm: true,
 			userName: "",
 			domain: config.available_domains[0],
 			password: "",
 			domainList: config.available_domains,
 		};
+	}
+
+	get validationUserName() {
+		if (this.emailList.validateUserName(this.userName)) {
+			return "valid" 
+		} else {
+			return "non-valid"
+		}
+	}
+
+	get validationPassword() {
+		if (this.emailList.validatePassword(this.password)) {
+			return "valid" 
+		} else {
+			return "non-valid"
+		}
 	}
 
 	triggerPopup() {
@@ -54,4 +70,14 @@ export default class Adding extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.valid {
+	color: #00883f;
+	border: 1px solid #00883f;
+}
+.non-valid {
+	color: red;
+	border: 1px solid red;
+}
+
+</style>

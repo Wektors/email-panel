@@ -21,14 +21,26 @@ export default class EmailList {
 		this.emails.splice(index, index + 1);
 	}
 
-	validate(user, pass) {
-		if (
-			this.EmailValidation.userName(user) === true &&
-			this.EmailValidation.password(pass) === true
-		) {
+	validateUserName(userName) {
+		if (this.EmailValidation.userName(userName) === true) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	validatePassword(password) {
+		if (this.EmailValidation.password(password) === true) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	validate(userName, password) {
+		if (
+		this.validateUser(userName) &&
+		this.validatePassword(password)
+		) {
+			return true
 		}
 	}
 }
