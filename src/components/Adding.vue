@@ -33,7 +33,7 @@ export default class Adding extends Vue {
 
 	data() {
 		return {
-			showForm: true,
+			showForm: false,
 			userName: "",
 			domain: config.available_domains[0],
 			password: "",
@@ -42,11 +42,7 @@ export default class Adding extends Vue {
 	}
 
 	triggerPopup() {
-		if (this.showForm == true) {
-			this.showForm = false;
-		} else {
 			this.showForm = true;
-		}
 	}
 
 	triggerAdd() {
