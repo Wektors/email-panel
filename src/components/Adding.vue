@@ -24,7 +24,6 @@
 			<br />
 			<button @click="triggerAdd()">Dodaj</button>
 		</slot>
-		available:{{ this.emailList.availableSpace }}
 	</div>
 </template>
 
@@ -45,7 +44,7 @@ export default class Adding extends Vue {
 			domain: this.emailList.domainList[0],
 			password: "",
 			domainList: this.emailList.domainList,
-			capacity: null,
+			capacity: undefined,
 		};
 	}
 
@@ -78,8 +77,10 @@ export default class Adding extends Vue {
 	}
 
 	triggerAdd() {
+		this.emailList.validate(this.userName, this.password, this.capacity)
 		this.emailList.add(
-			this.userName + "@" + this.domain,
+			this.userName,
+			this.domain,
 			this.password,
 			this.capacity
 		);

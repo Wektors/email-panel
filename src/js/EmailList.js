@@ -8,14 +8,21 @@ export default class EmailList {
 		this.emails = [];
 		this.domainList = config.available_domains;
 		this.availableSpace = parseInt(config.available_space_GB);
-		// this.add("wiktor@wiktor.com", "qwerty", 10);
-		// this.add("pawel@pawel.com", "qwerty", 10);
+		this.usedSpace = 0;
+		// this.add("wiktor@wiktor.com", "qwerty", 5);
+		// this.add("pawel@pawel.com", "qwerty", 5);
 	}
 
-	add(emailAddress, password, capacity) {
-		let newEmail = new Email(emailAddress, password, capacity);
-		this.emails.push(newEmail);
-		this.changeCapacity(capacity);
+	add(userName, domain, password, capacity) {
+		if (
+			this.validateUserName(userName) &&
+			this.validatePassword(password) &&
+			this.validateCapacity(capacity)
+		) {
+			let newEmail = new Email(userName + "@" + domain, password, capacity);
+			this.emails.push(newEmail);
+			this.usedSpace += parseInt(capacity);
+		}
 	}
 	get getEmails() {
 		return this.emails;
@@ -25,38 +32,40 @@ export default class EmailList {
 		this.emails.splice(index, index + 1);
 	}
 
-	validateUserName(userName) {
-		if (this.EmailValidation.userName(userName) === true) {
+	validateUserName(user) {
+		if (this.EmailValidation.userName(user) === true) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	validatePassword(password) {
-		if (this.EmailValidation.password(password) === true) {
+	validatePassword(pass) {
+		if (this.EmailValidation.password(pass) === true) {
 			return true;
 		} else {
-			return false;
+			return true;
 		}
 	}
 	validateCapacity(capacity) {
-		if (capacity <= this.availableSpace && capacity > 0 && capacity % 1 == 0) {
+		if (
+			capacity == parseInt(capacity) &&
+			capacity <= this.availableSpace - this.usedSpace &&
+			capacity !== 0
+		) {
 			return true;
 		}
-		console.log("capacity non val") 
 		return false;
 	}
-	changeCapacity(capacity) {
-		this.availableSpace = this.availableSpace - parseInt(capacity)
-	}
-	
+
 	validate(userName, password, capacity) {
 		if (
-		this.validateUserName(userName) &&
-		this.validatePassword(password) &&
-		this.validateCapacity(capacity)
+			this.validateUserName(userName) &&
+			this.validatePassword(password) &&
+			this.validateCapacity(capacity)
 		) {
-			return true
+			return true;
+		} else {
+			return false;
 		}
 	}
 }
