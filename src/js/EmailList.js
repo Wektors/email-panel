@@ -50,7 +50,7 @@ export default class EmailList {
 		if (
 			capacity == parseInt(capacity) &&
 			capacity <= this.availableSpace - this.usedSpace &&
-			capacity !== 0
+			capacity > 0
 		) {
 			return true;
 		}
