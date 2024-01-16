@@ -9,9 +9,7 @@ export default class EmailList {
 		this.emails = [];
 		this.domainList = config.available_domains;
 		this.availableSpace = parseInt(config.available_space_GB);
-		this.usedSpace = Storage.load("usedSpace");
-		// this.add("wiktor@wiktor.com", "qwerty", 5);
-		// this.add("pawel@pawel.com", "qwerty", 5);
+		this.usedSpace = 0;
 	}
 
 	add(userName, domain, password, capacity) {
@@ -24,7 +22,6 @@ export default class EmailList {
 			this.emails.push(newEmail);
 			this.usedSpace += parseInt(capacity);
 			Storage.save("emails", this.emails);
-			Storage.save("usedSpace", this.usedSpace)
 		}
 	}
 
@@ -74,9 +71,8 @@ export default class EmailList {
 	}
 
 	deserializeEmails() {
-		let storageArray = JSON.parse(Storage.load("emails"))
-		console.log(storageArray)
-		let emailList = []
+		let storageArray = JSON.parse(Storage.load("emails"));
+		let emailList = [];
 
 		for (let i = 0; i < storageArray.length; i++) {
 			let newEmail = new Email(
@@ -84,10 +80,18 @@ export default class EmailList {
 				storageArray[i].password,
 				storageArray[i].capacity
 			);
-			emailList.push(newEmail)
+			emailList.push(newEmail);
 		}
-		
-		this.emails = emailList
+		this.emails = emailList;
 	}
 
+	calculateUsedSpace() {
+		this.deserializeEmails()
+		let emailList = this.emails;
+		let spaceUsed = 0;
+		for (let i = 0; i < emailList.length; i++) {
+			spaceUsed += parseInt(emailList[i].capacity);
+		}
+		return spaceUsed;
+	}
 }

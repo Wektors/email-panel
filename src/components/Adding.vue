@@ -24,7 +24,7 @@
 			<br />
 			<button @click="triggerAdd()">Dodaj</button>
 		</slot>
-		{{  this.emailList.usedSpace }}
+		<!-- {{  this.emailList.usedSpace }} -->
 	</div>
 </template>
 
@@ -92,6 +92,7 @@ export default class Adding extends Vue {
 	}
 	beforeMount() {
 		this.loadFromStorage()
+		this.emailList.calculateUsedSpace();
 	}
 }
 </script>
