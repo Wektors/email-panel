@@ -31,6 +31,7 @@ export default class EmailList {
 
 	deleteEmail(index) {
 		this.emails.splice(index, index + 1);
+		Storage.save("emails", this.emails);
 	}
 
 	validateUserName(user) {

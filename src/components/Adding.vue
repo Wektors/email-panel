@@ -24,10 +24,10 @@
 			<br />
 			<button @click="triggerAdd()">Dodaj</button>
 		</slot>
-		<!-- {{  this.emailList.usedSpace }} -->
+		{{  this.emailList.usedSpace }}
 	</div>
 </template>
-
+<!--  -->
 <script>
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
