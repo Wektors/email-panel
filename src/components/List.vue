@@ -7,11 +7,12 @@
 				<th>Usuń</th>
 			</tr>
 			<tr
-				v-for="({ emailAddress, key }, index) in emailList.getEmails"
+				v-for="({ emailAddress, capacity, key }, index) in emailList.getEmails"
 				:key="key"
+				
 			>
 				<td>{{ index + 1 }}</td>
-				<td>{{ emailAddress }}</td>
+				<td :title="capacity + ' GB'">{{ emailAddress }}</td>
 				<button @click="deleteEmail(index)">X</button>
 			</tr>
             <tr v-if="listEmpty">
