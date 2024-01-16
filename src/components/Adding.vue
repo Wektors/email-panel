@@ -5,8 +5,10 @@
 		<br />
 		<slot v-if="value === true">
 			Email: <input type="text" v-model="userName" />@<select>
-				<option>wiktor.com</option>
-				<option>pawel.com</option>
+					<option v-for="domain in domainList" :key="domain">
+						{{ domain }}
+					</option>
+				
 			</select>
 			<br />
 			Hasło: <input type="password" v-model="password" />
@@ -22,6 +24,7 @@
 <script>
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
+import config from "/home/vector/Dokumenty/Projects/email-panel/src/data/config.json";
 
 @Component({
 	components: {},
@@ -34,6 +37,7 @@ export default class Adding extends Vue {
 			value: true,
 			userName: "",
 			password: "",
+			domainList: config.available_domains,
 		};
 	}
 
