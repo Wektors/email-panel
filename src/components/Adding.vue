@@ -3,34 +3,37 @@
 		<button @click="triggerPopup()">Dodaj skrzynkę</button>
 		<br />
 		<br />
-		<slot v-if="value === true"> 
-		Email: <input type="text">@<select>
-			<option>wiktor.com</option>
-			<option>pawel.com</option>
-		</select>
-		<br />
-		Hasło: <input type="password"> <button>Generuj hasło</button>
-		<br />
-		Pojemność: <input type="number"> GB
+		<slot v-if="value === true">
+			Email: <input type="text" v-model="userName" />@<select>
+				<option>wiktor.com</option>
+				<option>pawel.com</option>
+			</select>
+			<br />
+			Hasło: <input type="password" v-model="password" />
+			<button>Generuj hasło</button>
+			<br />
+			Pojemność: <input type="number" /> GB
 		</slot>
 		<br />
-		<button>Dodaj</button>
+		<button @click="triggerAdd()">Dodaj</button>
 	</div>
 </template>
 
 <script>
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Prop, Component } from "vue-property-decorator";
 
 @Component({
 	components: {},
 })
 export default class Adding extends Vue {
-	// @Prop({default: false,}) value;
+	@Prop() emailList;
 
 	data() {
 		return {
 			value: true,
+			userName: "",
+			password: "",
 		};
 	}
 
@@ -39,6 +42,12 @@ export default class Adding extends Vue {
 			this.value = false;
 		} else {
 			this.value = true;
+		}
+	}
+
+	triggerAdd() {
+		if (this.emailList.validate(this.userName, this.password)) {
+			this.emailList.add(this.userName, this.password);
 		}
 	}
 }

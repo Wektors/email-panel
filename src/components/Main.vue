@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<List :emailList="EmailList" />
-		<Adding />
+		<Adding :emailList="EmailList" />
 	</div>
 </template>
 
