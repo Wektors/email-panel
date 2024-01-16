@@ -1,6 +1,7 @@
 import Email from "./Email.js";
 import EmailValidation from "./EmailValidation.js";
 import config from "/home/vector/Dokumenty/Projects/email-panel/src/data/config.json";
+import Storage from "./Storage.js";
 
 export default class EmailList {
 	constructor() {
@@ -22,6 +23,8 @@ export default class EmailList {
 			let newEmail = new Email(userName + "@" + domain, password, capacity);
 			this.emails.push(newEmail);
 			this.usedSpace += parseInt(capacity);
+			Storage.save("emails", this.emails);
+			Storage.save("usedSpace", this.usedSpace)
 		}
 	}
 	get getEmails() {
