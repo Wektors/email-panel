@@ -3,21 +3,20 @@
 		<button @click="triggerPopup()">Dodaj skrzynkę</button>
 		<br />
 		<br />
-		<slot v-if="value === true">
+		<slot v-if="showForm === true">
 			Email: <input type="text" v-model="userName" />@<select v-model="domain">
-					<option v-for="domain in domainList" :key="domain">
-						{{ domain }}
-					</option>
-				
+				<option v-for="domain in domainList" :key="domain">
+					{{ domain }}
+				</option>
 			</select>
 			<br />
 			Hasło: <input type="password" v-model="password" />
 			<button>Generuj hasło</button>
 			<br />
 			Pojemność: <input type="number" /> GB
+			<br />
+			<button @click="triggerAdd()">Dodaj</button>
 		</slot>
-		<br />
-		<button @click="triggerAdd()">Dodaj</button>
 	</div>
 </template>
 
@@ -34,7 +33,7 @@ export default class Adding extends Vue {
 
 	data() {
 		return {
-			value: true,
+			showForm: true,
 			userName: "",
 			domain: config.available_domains[0],
 			password: "",
@@ -43,16 +42,17 @@ export default class Adding extends Vue {
 	}
 
 	triggerPopup() {
-		if (this.value == true) {
-			this.value = false;
+		if (this.showForm == true) {
+			this.showForm = false;
 		} else {
-			this.value = true;
+			this.showForm = true;
 		}
 	}
 
 	triggerAdd() {
 		if (this.emailList.validate(this.userName, this.password)) {
 			this.emailList.add(this.userName + "@" + this.domain, this.password);
+			this.showForm = false;
 		}
 	}
 }
