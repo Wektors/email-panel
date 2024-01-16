@@ -1,3 +1,5 @@
+import Email from './Email.js';
+
 export default class EmailList {
 	constructor() {
 		this.emails = [];
@@ -10,12 +12,9 @@ export default class EmailList {
 	 */
 
 	add(emailAddress, password, capacity) {
-		this.emails.push({
-			emailAddress: emailAddress,
-			password: password,
-			capacity: capacity,
-		});
-		console.log(this.emails);
+			let newEmail = new Email(emailAddress, password, capacity) 
+			this.emails.push(newEmail);
+
 	}
 	get getEmails() {
 		return this.emails;
