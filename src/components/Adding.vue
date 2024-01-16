@@ -4,7 +4,7 @@
 		<br />
 		<br />
 		<slot v-if="value === true">
-			Email: <input type="text" v-model="userName" />@<select>
+			Email: <input type="text" v-model="userName" />@<select v-model="domain">
 					<option v-for="domain in domainList" :key="domain">
 						{{ domain }}
 					</option>
@@ -36,6 +36,7 @@ export default class Adding extends Vue {
 		return {
 			value: true,
 			userName: "",
+			domain: config.available_domains[0],
 			password: "",
 			domainList: config.available_domains,
 		};
@@ -51,7 +52,7 @@ export default class Adding extends Vue {
 
 	triggerAdd() {
 		if (this.emailList.validate(this.userName, this.password)) {
-			this.emailList.add(this.userName, this.password);
+			this.emailList.add(this.userName + "@" + this.domain, this.password);
 		}
 	}
 }
