@@ -17,14 +17,13 @@
 			<br />
 			Hasło:
 			<input type="password" v-model="password" :class="validationPassword" />
-			<button>Generuj hasło</button>
+			<button @click="generatePassword()">Generuj hasło</button>
 			<br />
 			Pojemność:
 			<input type="number" v-model="capacity" :class="validationCapacity" /> GB
 			<br />
 			<button @click="triggerAdd()">Dodaj</button>
 		</slot>
-		{{  this.emailList.usedSpace }}
 	</div>
 </template>
 <!--  -->
@@ -93,6 +92,10 @@ export default class Adding extends Vue {
 	beforeMount() {
 		this.loadFromStorage()
 		this.emailList.calculateUsedSpace();
+	}
+
+	generatePassword() {
+		this.password = this.emailList.generatePassword();
 	}
 }
 </script>
