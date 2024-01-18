@@ -29,19 +29,15 @@ export default class EmailList {
 
 	validateUserName(userName) {
 		if (this.EmailValidation.userName(userName)) {
-			console.log("userName validated");
 			return true;
 		} else {
-			console.log("userName not validated");
 			return false;
 		}
 	}
 	validatePassword(password) {
 		if (this.EmailValidation.password(password)) {
-			console.log("password validated");
 			return true;
 		} else {
-			console.log("password not validated");
 			return true;
 		}
 	}
@@ -52,10 +48,8 @@ export default class EmailList {
 			spaceTaken = this.calculateUsedSpace(this.emails);
 		}
 		if (this.availableSpace - spaceTaken >= intCapacity && intCapacity > 0) {
-			console.log("capacity validated");
 			return true;
 		} else {
-			console.log("capacity not validated");
 			return false;
 		}
 

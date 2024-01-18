@@ -16,7 +16,7 @@
 			</select>
 			<br />
 			Hasło:
-			<input type="password" v-model="password" :class="validationPassword" />
+			<input :type="passwordType" v-model="password" :class="validationPassword"/>
 			<button @click="generatePassword()">Generuj hasło</button>
 			<br />
 			Pojemność:
@@ -44,6 +44,7 @@ export default class Adding extends Vue {
 			password: "",
 			domainList: this.emailList.domainList,
 			capacity: undefined,
+			passwordType: "password",
 		};
 	}
 
@@ -84,6 +85,8 @@ export default class Adding extends Vue {
 			this.capacity
 		);
 		this.showForm = false;
+		this.passwordType = "password";
+
 		}
 	}
 	loadFromStorage() {
@@ -96,7 +99,7 @@ export default class Adding extends Vue {
 
 	generatePassword() {
 		this.password = this.emailList.generatePassword();
-		console.log(this.password);
+		this.passwordType = "text";
 	}
 }
 </script>
