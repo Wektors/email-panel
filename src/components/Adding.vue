@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button @click="triggerPopup()">Dodaj skrzynkę</button>
+		<button @click="triggerPopup()" v-if="showForm === false" >Dodaj skrzynkę</button>
 		<br />
 		<br />
 		<slot v-if="showForm === true">
@@ -26,7 +26,6 @@
 		</slot>
 	</div>
 </template>
-<!--  -->
 <script>
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
@@ -96,6 +95,7 @@ export default class Adding extends Vue {
 
 	generatePassword() {
 		this.password = this.emailList.generatePassword();
+		console.log(this.password);
 	}
 }
 </script>
