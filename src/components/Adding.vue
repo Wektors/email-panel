@@ -76,7 +76,7 @@ export default class Adding extends Vue {
 	}
 
 	triggerAdd() {
-		this.emailList.validate(this.userName, this.password, this.capacity)
+		if (this.emailList.validate(this.userName, this.password, this.capacity)) {
 		this.emailList.add(
 			this.userName,
 			this.domain,
@@ -84,13 +84,14 @@ export default class Adding extends Vue {
 			this.capacity
 		);
 		this.showForm = false;
+		}
 	}
 	loadFromStorage() {
 		this.emailList.deserializeEmails();
 	}
 	beforeMount() {
 		this.loadFromStorage()
-		this.emailList.calculateUsedSpace();
+		this.emailList.deserializeEmails();
 	}
 
 	generatePassword() {

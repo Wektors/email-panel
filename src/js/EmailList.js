@@ -9,20 +9,13 @@ export default class EmailList {
 		this.emails = [];
 		this.domainList = config.available_domains;
 		this.availableSpace = parseInt(config.available_space_GB);
-		this.usedSpace = 0;
 	}
 
 	add(userName, domain, password, capacity) {
-		if (
-			this.validateUserName(userName) &&
-			this.validatePassword(password) &&
-			this.validateCapacity(capacity)
-		) {
-			let newEmail = new Email(userName + "@" + domain, password, capacity);
-			this.emails.push(newEmail);
-			Storage.save("emails", this.emails);
-			this.usedSpace += parseInt(capacity);
-		}
+		let newEmail = new Email(userName + "@" + domain, password, capacity);
+		this.emails.push(newEmail);
+		Storage.save("emails", this.emails);
+		return true;
 	}
 
 	get getEmails() {
@@ -34,29 +27,38 @@ export default class EmailList {
 		Storage.save("emails", this.emails);
 	}
 
-	validateUserName(user) {
-		if (this.EmailValidation.userName(user) === true) {
+	validateUserName(userName) {
+		if (this.EmailValidation.userName(userName)) {
+			console.log("userName validated");
 			return true;
 		} else {
+			console.log("userName not validated");
 			return false;
 		}
 	}
-	validatePassword(pass) {
-		if (this.EmailValidation.password(pass) === true) {
+	validatePassword(password) {
+		if (this.EmailValidation.password(password)) {
+			console.log("password validated");
 			return true;
 		} else {
+			console.log("password not validated");
 			return true;
 		}
 	}
 	validateCapacity(capacity) {
-		if (
-			capacity == parseInt(capacity) &&
-			capacity <= this.availableSpace - this.usedSpace &&
-			capacity > 0
-		) {
-			return true;
+		const intCapacity = parseInt(capacity);
+		let spaceTaken = 0
+		if (this.emails.length > 0) {
+			spaceTaken = this.calculateUsedSpace(this.emails);
 		}
-		return false;
+		if (this.availableSpace - spaceTaken >= intCapacity && intCapacity > 0) {
+			console.log("capacity validated");
+			return true;
+		} else {
+			console.log("capacity not validated");
+			return false;
+		}
+
 	}
 
 	validate(userName, password, capacity) {
@@ -86,9 +88,7 @@ export default class EmailList {
 		this.emails = emailList;
 	}
 
-	calculateUsedSpace() {
-		this.deserializeEmails();
-		let emailList = this.emails;
+	calculateUsedSpace(emailList) {
 		let spaceUsed = 0;
 		for (let i = 0; i < emailList.length; i++) {
 			spaceUsed += parseInt(emailList[i].capacity);
@@ -102,11 +102,38 @@ export default class EmailList {
 				const j = Math.floor(Math.random() * (i + 1));
 				[array[i], array[j]] = [array[j], array[i]];
 			}
-			return array
+			return array;
 		}
 
-		let letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-		let signs = ["#", "$", "%", "!", "@", "^", "*", "(", ")", "&",]
+		let letters = [
+			"a",
+			"b",
+			"c",
+			"d",
+			"e",
+			"f",
+			"g",
+			"h",
+			"i",
+			"j",
+			"k",
+			"l",
+			"m",
+			"n",
+			"o",
+			"p",
+			"q",
+			"r",
+			"s",
+			"t",
+			"u",
+			"v",
+			"w",
+			"x",
+			"y",
+			"z",
+		];
+		let signs = ["#", "$", "%", "!", "@", "^", "*", "(", ")", "&"];
 		let password = [];
 
 		for (let i = 0; i < 8; i++) {
@@ -116,16 +143,16 @@ export default class EmailList {
 		let randomNumber = Math.floor(Math.random() * 10);
 		password.push(randomNumber);
 
-		let randomSign = signs[Math.floor(Math.random() * 10)]
+		let randomSign = signs[Math.floor(Math.random() * 10)];
 		password.push(randomSign);
 
 		password = shuffleArray(password);
 
-		password = password.toString()
+		password = password.toString();
 
-		let regex = /,/gi
-		password = password.replace(regex, "")
+		let regex = /,/gi;
+		password = password.replace(regex, "");
 
-		return password
+		return password;
 	}
 }
