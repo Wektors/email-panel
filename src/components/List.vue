@@ -46,8 +46,9 @@ export default class List extends Vue {
     }
 
 	deleteEmail(index) {
-        confirm("Czy na pewno?");
-		this.emailList.deleteEmail(index);
+        if (confirm("Czy na pewno?")) {
+			this.emailList.deleteEmail(index);
+		}
 	}
 }
 </script>
