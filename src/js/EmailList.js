@@ -27,18 +27,6 @@ export default class EmailList {
 		Storage.save("emails", this.emails);
 	}
 
-	validate(userName, password, capacity) {
-		if (
-			this.EmailValidation.userName(userName) &&
-			this.EmailValidation.password(password) &&
-			this.EmailValidation.capacity(capacity, this)
-		) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	deserializeEmails() {
 		let storageArray = JSON.parse(Storage.load("emails"));
 		let emailList = [];
@@ -54,12 +42,6 @@ export default class EmailList {
 		this.emails = emailList;
 	}
 
-	calculateUsedSpace(emailList) {
-		let spaceUsed = 0;
-		for (let i = 0; i < emailList.length; i++) {
-			spaceUsed += parseInt(emailList[i].capacity);
-		}
-		return spaceUsed;
-	}
+	
 
 }

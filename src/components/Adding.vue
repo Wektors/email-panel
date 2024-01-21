@@ -1,35 +1,41 @@
 <template>
 	<div>
-		<button @click="triggerPopup()" v-if="showForm === false" >Dodaj skrzynkę</button>
+		<button @click="triggerPopup()" v-if="showForm === false">
+			Dodaj skrzynkę
+		</button>
 		<br />
 		<br />
 		<slot v-if="showForm === true">
-			Email:
-			<input
+				Email:
+				<input
 				type="text"
 				v-model="userName"
 				:class="validationUserName"
-			/>@<select v-model="domain">
-				<option v-for="domain in domainList" :key="domain">
-					{{ domain }}
-				</option>
-			</select>
-			<br />
-			Hasło:
-			<input :type="passwordType" v-model="password" :class="validationPassword"/>
-			<button @click="generatePassword()">Generuj hasło</button>
-			<br />
-			Pojemność:
-			<input type="number" v-model="capacity" :class="validationCapacity" /> GB
-			<br />
-			<button @click="triggerAdd()">Dodaj</button>
+				/>@<select v-model="domain">
+					<option v-for="domain in domainList" :key="domain">
+						{{ domain }}
+					</option>
+				</select>
+				<br />
+				Hasło:
+				<input
+				:type="passwordType"
+				v-model="password"
+				:class="validationPassword"
+				/>
+				<button @click="generatePassword()">Generuj hasło</button>
+				<br />
+				Pojemność:
+				<input type="number" v-model="capacity" :class="validationCapacity" /> GB
+				<br />
+				<button @click.capture="triggerAdd()">Dodaj</button>
 		</slot>
 	</div>
 </template>
 <script>
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
-import generateRandomPassword from "@/js/generateRandomPassword"
+import generateRandomPassword from "@/js/generateRandomPassword";
 import EmailValidation from "@/js/EmailValidation.js";
 
 @Component({
@@ -49,11 +55,14 @@ export default class Adding extends Vue {
 			passwordType: "password",
 			generateRandomPassword: generateRandomPassword,
 			EmailValidation: new EmailValidation(),
+			checkValidation: false,
 		};
 	}
 
 	get validationUserName() {
-		if (this.EmailValidation.userName(this.userName)) {
+		if (this.checkValidation === false) {
+			return "";
+		} else if (this.EmailValidation.userName(this.userName)) {
 			return "valid";
 		} else {
 			return "non-valid";
@@ -61,7 +70,9 @@ export default class Adding extends Vue {
 	}
 
 	get validationPassword() {
-		if (this.EmailValidation.password(this.password)) {
+		if (this.checkValidation === false) {
+			return "";
+		} else if (this.EmailValidation.password(this.password)) {
 			return "valid";
 		} else {
 			return "non-valid";
@@ -69,7 +80,9 @@ export default class Adding extends Vue {
 	}
 
 	get validationCapacity() {
-		if (this.EmailValidation.capacity(this.capacity, this.emailList)) {
+		if (this.checkValidation === false) {
+			return "";
+		} else if (this.EmailValidation.capacity(this.capacity, this.emailList)) {
 			return "valid";
 		} else {
 			return "non-valid";
@@ -81,29 +94,42 @@ export default class Adding extends Vue {
 	}
 
 	triggerAdd() {
-		if (this.emailList.validate(this.userName, this.password, this.capacity)) {
-		this.emailList.add(
-			this.userName,
-			this.domain,
-			this.password,
-			this.capacity
-		);
-		this.showForm = false;
-		this.passwordType = "password";
-
+		if (
+			this.EmailValidation.validateAll(
+				this.userName,
+				this.password,
+				this.capacity,
+				this.emailList
+			)
+		) {
+			this.emailList.add(
+				this.userName,
+				this.domain,
+				this.password,
+				this.capacity
+			);
+			this.showForm = false;
+			this.passwordType = "password";
+			this.userName = "";
+			this.password = "";
+			this.capacity = "";
+			this.checkValidation = false;
+		} else {
+			this.checkValidation = true;
 		}
 	}
 	loadFromStorage() {
 		this.emailList.deserializeEmails();
 	}
 	beforeMount() {
-		this.loadFromStorage()
-		this.emailList.deserializeEmails();
+		this.loadFromStorage();
 	}
 
 	generatePassword() {
-		this.password = this.generateRandomPassword();
+		let newPassword = this.generateRandomPassword();
+		this.password = newPassword;
 		this.passwordType = "text";
+		this.checkValidation = false;
 	}
 }
 </script>
