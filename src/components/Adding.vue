@@ -29,6 +29,7 @@
 <script>
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
+import generateRandomPassword from "@/js/generateRandomPassword"
 
 @Component({
 	components: {},
@@ -45,6 +46,7 @@ export default class Adding extends Vue {
 			domainList: this.emailList.domainList,
 			capacity: undefined,
 			passwordType: "password",
+			generateRandomPassword: generateRandomPassword,
 		};
 	}
 
@@ -98,7 +100,7 @@ export default class Adding extends Vue {
 	}
 
 	generatePassword() {
-		this.password = this.emailList.generatePassword();
+		this.password = this.generateRandomPassword();
 		this.passwordType = "text";
 	}
 }
