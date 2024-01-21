@@ -27,39 +27,11 @@ export default class EmailList {
 		Storage.save("emails", this.emails);
 	}
 
-	validateUserName(userName) {
-		if (this.EmailValidation.userName(userName)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	validatePassword(password) {
-		if (this.EmailValidation.password(password)) {
-			return true;
-		} else {
-			return true;
-		}
-	}
-	validateCapacity(capacity) {
-		const intCapacity = parseInt(capacity);
-		let spaceTaken = 0
-		if (this.emails.length > 0) {
-			spaceTaken = this.calculateUsedSpace(this.emails);
-		}
-		if (this.availableSpace - spaceTaken >= intCapacity && intCapacity > 0) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
 	validate(userName, password, capacity) {
 		if (
-			this.validateUserName(userName) &&
-			this.validatePassword(password) &&
-			this.validateCapacity(capacity)
+			this.EmailValidation.userName(userName) &&
+			this.EmailValidation.password(password) &&
+			this.EmailValidation.capacity(capacity, this)
 		) {
 			return true;
 		} else {

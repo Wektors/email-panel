@@ -30,6 +30,7 @@
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
 import generateRandomPassword from "@/js/generateRandomPassword"
+import EmailValidation from "@/js/EmailValidation.js";
 
 @Component({
 	components: {},
@@ -47,11 +48,12 @@ export default class Adding extends Vue {
 			capacity: undefined,
 			passwordType: "password",
 			generateRandomPassword: generateRandomPassword,
+			EmailValidation: new EmailValidation(),
 		};
 	}
 
 	get validationUserName() {
-		if (this.emailList.validateUserName(this.userName)) {
+		if (this.EmailValidation.userName(this.userName)) {
 			return "valid";
 		} else {
 			return "non-valid";
@@ -59,7 +61,7 @@ export default class Adding extends Vue {
 	}
 
 	get validationPassword() {
-		if (this.emailList.validatePassword(this.password)) {
+		if (this.EmailValidation.password(this.password)) {
 			return "valid";
 		} else {
 			return "non-valid";
@@ -67,7 +69,7 @@ export default class Adding extends Vue {
 	}
 
 	get validationCapacity() {
-		if (this.emailList.validateCapacity(this.capacity)) {
+		if (this.EmailValidation.capacity(this.capacity, this.emailList)) {
 			return "valid";
 		} else {
 			return "non-valid";
