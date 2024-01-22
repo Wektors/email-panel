@@ -6,29 +6,23 @@
 		<br />
 		<br />
 		<slot v-if="showForm === true">
-				Email:
-				<input
-				type="text"
-				v-model="userName"
-				:class="validationUserName"
-				/>@<select v-model="domain">
-					<option v-for="domain in domainList" :key="domain">
-						{{ domain }}
-					</option>
-				</select>
-				<br />
-				Hasło:
-				<input
-				:type="passwordType"
-				v-model="password"
-				:class="validationPassword"
-				/>
-				<button @click="generatePassword()">Generuj hasło</button>
-				<br />
-				Pojemność:
-				<input type="number" v-model="capacity" :class="validationCapacity" /> GB
-				<br />
-				<button @click.capture="triggerAdd()">Dodaj</button>
+			Email:
+			<input type="text" v-model="userName" :class="classUserName" />@<select
+				v-model="domain"
+			>
+				<option v-for="domain in domainList" :key="domain">
+					{{ domain }}
+				</option>
+			</select>
+			<br />
+			Hasło:
+			<input :type="passwordType" v-model="password" :class="classPassword" />
+			<button @click="generatePassword()">Generuj hasło</button>
+			<br />
+			Pojemność:
+			<input type="number" v-model="capacity" :class="classCapacity" /> GB
+			<br />
+			<button @click.capture="triggerAdd()">Dodaj</button>
 		</slot>
 	</div>
 </template>
@@ -59,10 +53,30 @@ export default class Adding extends Vue {
 		};
 	}
 
-	get validationUserName() {
+	get classUserName() {
 		if (this.checkValidation === false) {
 			return "";
-		} else if (this.EmailValidation.userName(this.userName)) {
+		}
+		if (this.validationUserName) {
+			return "valid";
+		} else {
+			return "non-valid";
+		}
+	}
+
+	get validationUserName() {
+		if (this.EmailValidation.userName(this.userName) === true) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	get classPassword() {
+		if (this.checkValidation === false) {
+			return "";
+		}
+		if (this.validationPassword) {
 			return "valid";
 		} else {
 			return "non-valid";
@@ -70,9 +84,18 @@ export default class Adding extends Vue {
 	}
 
 	get validationPassword() {
+		if (this.EmailValidation.password(this.password) === true) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	get classCapacity() {
 		if (this.checkValidation === false) {
 			return "";
-		} else if (this.EmailValidation.password(this.password)) {
+		}
+		if (this.validationCapacity) {
 			return "valid";
 		} else {
 			return "non-valid";
@@ -80,12 +103,10 @@ export default class Adding extends Vue {
 	}
 
 	get validationCapacity() {
-		if (this.checkValidation === false) {
-			return "";
-		} else if (this.EmailValidation.capacity(this.capacity, this.emailList)) {
-			return "valid";
+		if (this.EmailValidation.capacity(this.capacity, this.emailList)) {
+			return true;
 		} else {
-			return "non-valid";
+			return false;
 		}
 	}
 
@@ -93,15 +114,20 @@ export default class Adding extends Vue {
 		this.showForm = true;
 	}
 
-	triggerAdd() {
+	validateAlL() {
 		if (
-			this.EmailValidation.validateAll(
-				this.userName,
-				this.password,
-				this.capacity,
-				this.emailList
-			)
+			this.validationUserName &&
+			this.validationPassword &&
+			this.validationCapacity
 		) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	triggerAdd() {
+		if (this.validateAlL()) {
 			this.emailList.add(
 				this.userName,
 				this.domain,
@@ -109,7 +135,6 @@ export default class Adding extends Vue {
 				this.capacity
 			);
 			this.showForm = false;
-			this.passwordType = "password";
 			this.userName = "";
 			this.password = "";
 			this.capacity = "";

@@ -1,4 +1,4 @@
-import Validators from "./Validators";
+import Validators from "@/js/Validators";
 
 export default class EmailValidation {
 	constructor() {}
@@ -30,17 +30,6 @@ export default class EmailValidation {
 			return true;
 		} else {
 			return false;
-		}
-	}
-	validateAll(userName, password, capacity, list) {
-		if (this.userName(userName) === false) {
-			return false;
-		} else if (this.password(password) === false) {
-			return false;
-		} else if (this.capacity(capacity, list) === false) {
-			return false;
-		} else {
-			return true;
 		}
 	}
 }
