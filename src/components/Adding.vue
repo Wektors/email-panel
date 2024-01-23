@@ -22,7 +22,7 @@
 			Pojemność:
 			<input type="number" v-model="capacity" :class="classCapacity" /> GB
 			<br />
-			<button @click.capture="triggerAdd()">Dodaj</button>
+			<button @click="triggerAdd()">Dodaj</button>
 		</slot>
 	</div>
 </template>
@@ -41,7 +41,7 @@ export default class Adding extends Vue {
 
 	data() {
 		return {
-			showForm: true,
+			showForm: false,
 			userName: "",
 			domain: config.available_domains[0],
 			password: "",
@@ -52,6 +52,7 @@ export default class Adding extends Vue {
 			checkValidation: false,
 			domainList: config.available_domains,
 			availableSpace: parseInt(config.available_space_GB),
+			omitValidationPassword: "",
 		};
 	}
 
@@ -86,6 +87,9 @@ export default class Adding extends Vue {
 	}
 
 	get validationPassword() {
+		if (this.password === this.omitValidationPassword) {
+			return true;
+		}
 		if (EmailValidation.password(this.password) === true) {
 			return true;
 		} else {
@@ -105,7 +109,13 @@ export default class Adding extends Vue {
 	}
 
 	get validationCapacity() {
-		if (EmailValidation.capacity(this.capacity, this.emailList, this.availableSpace)) {
+		if (
+			EmailValidation.capacity(
+				this.capacity,
+				this.emailList,
+				this.availableSpace
+			)
+		) {
 			return true;
 		} else {
 			return false;
@@ -113,10 +123,11 @@ export default class Adding extends Vue {
 	}
 
 	triggerPopup() {
+		this.clearForm();
 		this.showForm = true;
 	}
 
-	validateAlL() {
+	validateAll() {
 		if (
 			this.validationUserName &&
 			this.validationPassword &&
@@ -128,35 +139,34 @@ export default class Adding extends Vue {
 		}
 	}
 
+	clearForm() {
+		this.userName = "";
+		(this.password = ""), (this.capacity = undefined);
+		this.checkValidation = false;
+		this.passwordType = "password";
+		this.omitValidationPassword = "";
+	}
+
 	triggerAdd() {
-		if (this.validateAlL()) {
+		if (this.validateAll()) {
 			this.emailList.add(
 				this.userName,
 				this.domain,
 				this.password,
 				this.capacity
 			);
+			this.clearForm();
 			this.showForm = false;
-			this.userName = "";
-			this.password = "";
-			this.capacity = "";
-			this.checkValidation = false;
 		} else {
 			this.checkValidation = true;
 		}
 	}
-	loadFromStorage() {
-		this.emailList.deserializeEmails();
-	}
-	beforeMount() {
-		this.loadFromStorage();
-	}
 
 	generatePassword() {
+		this.passwordType = "text";
 		let newPassword = this.generateRandomPassword();
 		this.password = newPassword;
-		this.passwordType = "text";
-		this.checkValidation = false;
+		this.omitValidationPassword = newPassword; // no nie mialem innego pomyslu jak to naprawic
 	}
 }
 </script>

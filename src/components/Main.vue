@@ -24,6 +24,12 @@ export default class Main extends Vue {
 			emailList: new EmailList(),
 		};
 	}
+	loadFromStorage() {
+		this.emailList.deserializeEmails();
+	}
+	beforeMount() {
+		this.loadFromStorage();
+	}
 }
 </script>
 

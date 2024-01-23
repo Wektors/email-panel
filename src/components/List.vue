@@ -9,15 +9,14 @@
 			<tr
 				v-for="({ emailAddress, capacity, key }, index) in emailList.getEmails"
 				:key="key"
-				
 			>
 				<td>{{ index + 1 }}</td>
 				<td :title="capacity + ' GB'">{{ emailAddress }}</td>
 				<button @click="deleteEmail(index)">X</button>
 			</tr>
-            <tr v-if="listEmpty">
-                Brak skrzynek e-mail
-            </tr>
+			<tr v-if="listEmpty">
+				Brak skrzynek e-mail
+			</tr>
 		</table>
 		<div>
 			<div></div>
@@ -39,14 +38,15 @@ export default class List extends Vue {
 		return {};
 	}
 
-    get listEmpty() {
-        if (this.emailList.getEmails.length === 0) {
-            return true
-        } return false
-    }
+	get listEmpty() {
+		if (this.emailList.getEmails.length === 0) {
+			return true;
+		}
+		return false;
+	}
 
 	deleteEmail(index) {
-        if (confirm("Czy na pewno?")) {
+		if (confirm("Czy na pewno?")) {
 			this.emailList.deleteEmail(index);
 		}
 	}
@@ -54,4 +54,3 @@ export default class List extends Vue {
 </script>
 
 <style scoped></style>
-
