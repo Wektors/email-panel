@@ -11,7 +11,7 @@ export default class EmailValidation {
 		let regex = Validators.password;
 		return regex.test(value);
 	}
-	capacity(capacity, list) {
+	capacity(capacity, list, availableSpace) {
 		let calculateUsedSpace = (emailList) => {
 			let spaceUsed = 0;
 			for (let i = 0; i < emailList.length; i++) {
@@ -26,7 +26,7 @@ export default class EmailValidation {
 		} else {
 			spaceTaken = 0;
 		}
-		if (list.availableSpace - spaceTaken >= intCapacity && intCapacity > 0) {
+		if (availableSpace - spaceTaken >= intCapacity && intCapacity > 0) {
 			return true;
 		} else {
 			return false;
