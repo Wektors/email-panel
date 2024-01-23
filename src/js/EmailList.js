@@ -1,10 +1,8 @@
 import Email from "./Email.js";
-import EmailValidation from "./EmailValidation.js";
 import Storage from "./Storage.js";
 
 export default class EmailList {
 	constructor() {
-		this.EmailValidation = new EmailValidation();
 		this.emails = [];
 	}
 

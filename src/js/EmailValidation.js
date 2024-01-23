@@ -1,17 +1,16 @@
 import Validators from "@/js/Validators";
 
 export default class EmailValidation {
-	constructor() {}
 
-	userName(value) {
+	static userName(value) {
 		let regex = Validators.userName;
 		return regex.test(value);
 	}
-	password(value) {
+	static password(value) {
 		let regex = Validators.password;
 		return regex.test(value);
 	}
-	capacity(capacity, list, availableSpace) {
+	static capacity(capacity, list, availableSpace) {
 		let calculateUsedSpace = (emailList) => {
 			let spaceUsed = 0;
 			for (let i = 0; i < emailList.length; i++) {

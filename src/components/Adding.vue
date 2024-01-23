@@ -48,7 +48,7 @@ export default class Adding extends Vue {
 			capacity: undefined,
 			passwordType: "password",
 			generateRandomPassword: generateRandomPassword,
-			EmailValidation: new EmailValidation(),
+			EmailValidation: EmailValidation,
 			checkValidation: false,
 			domainList: config.available_domains,
 			availableSpace: parseInt(config.available_space_GB),
@@ -67,7 +67,7 @@ export default class Adding extends Vue {
 	}
 
 	get validationUserName() {
-		if (this.EmailValidation.userName(this.userName) === true) {
+		if (EmailValidation.userName(this.userName) === true) {
 			return true;
 		} else {
 			return false;
@@ -86,7 +86,7 @@ export default class Adding extends Vue {
 	}
 
 	get validationPassword() {
-		if (this.EmailValidation.password(this.password) === true) {
+		if (EmailValidation.password(this.password) === true) {
 			return true;
 		} else {
 			return false;
@@ -105,7 +105,7 @@ export default class Adding extends Vue {
 	}
 
 	get validationCapacity() {
-		if (this.EmailValidation.capacity(this.capacity, this.emailList, this.availableSpace)) {
+		if (EmailValidation.capacity(this.capacity, this.emailList, this.availableSpace)) {
 			return true;
 		} else {
 			return false;

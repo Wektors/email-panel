@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<List :emailList="EmailList" />
-		<Adding :emailList="EmailList" />
+		<List :emailList="emailList" />
+		<Adding :emailList="emailList" />
 	</div>
 </template>
 
@@ -21,7 +21,7 @@ import Adding from "./Adding.vue";
 export default class Main extends Vue {
 	data() {
 		return {
-			EmailList: new EmailList(),
+			emailList: new EmailList(),
 		};
 	}
 }
