@@ -16,4 +16,12 @@ export default class EmailList {
 	deleteEmail(index) {
 		this.emails.splice(index, index + 1);
 	}
+
+	static calculateUsedSpace = (emailList) => {
+			let spaceUsed = 0;
+			for (let i = 0; i < emailList.length; i++) {
+				spaceUsed += parseInt(emailList[i].capacity);
+			}
+			return spaceUsed;
+		};
 }

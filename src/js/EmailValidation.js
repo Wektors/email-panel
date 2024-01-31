@@ -1,4 +1,5 @@
 import Validators from "@/js/Validators";
+import EmailList from "./EmailList";
 
 export default class EmailValidation {
 
@@ -11,17 +12,10 @@ export default class EmailValidation {
 		return regex.test(value);
 	}
 	static capacity(capacity, list, availableSpace) {
-		let calculateUsedSpace = (emailList) => {
-			let spaceUsed = 0;
-			for (let i = 0; i < emailList.length; i++) {
-				spaceUsed += parseInt(emailList[i].capacity);
-			}
-			return spaceUsed;
-		};
 		const intCapacity = parseInt(capacity);
 		let spaceTaken;
 		if (list.emails.length > 0) {
-			spaceTaken = calculateUsedSpace(list.emails);
+			spaceTaken = EmailList.calculateUsedSpace(list.emails);
 		} else {
 			spaceTaken = 0;
 		}
