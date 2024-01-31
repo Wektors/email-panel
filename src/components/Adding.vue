@@ -157,6 +157,7 @@ export default class Adding extends Vue {
 			);
 			this.clearForm();
 			this.showForm = false;
+			this.$emit('listChanged')
 		} else {
 			this.checkValidation = true;
 		}
