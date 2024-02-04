@@ -61,70 +61,47 @@ export default class Adding extends Vue {
 		};
 	}
 
-	get classUserName() {
-		if (this.checkValidation === false) {
-			return "";
-		}
-		if (this.validationUserName) {
-			return "valid";
-		} else {
-			return "non-valid";
-		}
+	validation(type, ...data) {
+		return EmailValidation[type](this[type], ...data);
 	}
-
 	get validationUserName() {
-		if (EmailValidation.userName(this.userName) === true) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.validation("userName");
 	}
-
-	get classPassword() {
-		if (this.checkValidation === false) {
-			return "";
-		}
-		if (this.validationPassword) {
-			return "valid";
-		} else {
-			return "non-valid";
-		}
-	}
-
 	get validationPassword() {
-		if (this.password === this.omitValidationPassword) {
-			return true;
-		}
-		if (EmailValidation.password(this.password) === true) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	get classCapacity() {
-		if (this.checkValidation === false) {
-			return "";
-		}
-		if (this.validationCapacity) {
-			return "valid";
-		} else {
-			return "non-valid";
-		}
+		if (this.password === this.omitValidationPassword) return true;
+		return this.validation("password");
 	}
 
 	get validationCapacity() {
-		if (
-			EmailValidation.capacity(
-				this.capacity,
-				this.emailList.calculateUsedSpace(),
-				this.availableSpace
-			)
-		) {
-			return true;
-		} else {
-			return false;
+		return this.validation(
+			"capacity",
+			this.emailList.calculateUsedSpace(),
+			this.availableSpace
+		);
+	}
+
+	validationClass(type, ...data) {
+		if (this.checkValidation === false) {
+			return "";
 		}
+		if (this.validation(type, ...data)) {
+			return "valid";
+		} else {
+			return "non-valid";
+		}
+	}
+	get classUserName() {
+		return this.validationClass("userName");
+	}
+	get classPassword() {
+		return this.validationClass("password");
+	}
+	get classCapacity() {
+		return this.validationClass(
+			"capacity",
+			this.emailList.calculateUsedSpace(),
+			this.availableSpace
+		);
 	}
 
 	triggerPopup() {
