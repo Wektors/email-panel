@@ -6,7 +6,7 @@ export default class EmailList {
 	}
 
 	add(userName, domain, password, capacity) {
-		this.emails.push(new Email(userName + "@" + domain, password, capacity))
+		this.emails.push(new Email(userName + "@" + domain, password, capacity));
 	}
 
 	get getEmails() {
@@ -17,11 +17,11 @@ export default class EmailList {
 		this.emails.splice(index, index + 1);
 	}
 
-	static calculateUsedSpace = (emailList) => {
-			let spaceUsed = 0;
-			for (let i = 0; i < emailList.length; i++) {
-				spaceUsed += parseInt(emailList[i].capacity);
-			}
-			return spaceUsed;
-		};
+	calculateUsedSpace() {
+		let spaceUsed = 0;
+		for (let i = 0; i < this.emails.length; i++) {
+			spaceUsed += parseInt(this.emails[i].capacity);
+		}
+		return spaceUsed;
+	}
 }

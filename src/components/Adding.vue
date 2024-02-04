@@ -112,7 +112,7 @@ export default class Adding extends Vue {
 		if (
 			EmailValidation.capacity(
 				this.capacity,
-				this.emailList,
+				this.emailList.calculateUsedSpace(),
 				this.availableSpace
 			)
 		) {
