@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button @click="triggerPopup()" v-if="showForm === false">
+		<button @click="triggerPopup" v-if="showForm === false">
 			Dodaj skrzynkę
 		</button>
 		<br />
@@ -17,12 +17,12 @@
 			<br />
 			Hasło:
 			<input :type="passwordType" v-model="password" :class="classPassword" />
-			<button @click="generatePassword()">Generuj hasło</button>
+			<button @click="generatePassword">Generuj hasło</button>
 			<br />
 			Pojemność:
 			<input type="number" v-model="capacity" :class="classCapacity" /> GB
 			<br />
-			<button @click="triggerAdd()">Dodaj</button>
+			<button @click="triggerAdd">Dodaj</button>
 		</slot>
 	</div>
 </template>

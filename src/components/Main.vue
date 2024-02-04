@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<List :emailList="emailList" @listChanged="saveToStorage()" />
-		<Adding :emailList="emailList" @listChanged="saveToStorage()" />
+		<List :emailList="emailList" @listChanged="saveToStorage" />
+		<Adding :emailList="emailList" @listChanged="saveToStorage" />
 	</div>
 </template>
 
