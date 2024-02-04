@@ -4,12 +4,10 @@ import EmailList from "./EmailList";
 export default class EmailValidation {
 
 	static userName(value) {
-		let regex = Validators.userName;
-		return regex.test(value);
+		return Validators.userName.test(value);
 	}
 	static password(value) {
-		let regex = Validators.password;
-		return regex.test(value);
+		return Validators.password.test(value);
 	}
 	static capacity(capacity, list, availableSpace) {
 		const intCapacity = parseInt(capacity);

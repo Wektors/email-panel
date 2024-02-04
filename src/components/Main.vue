@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<List :emailList="emailList" @listChanged="saveToStorage"/>
-		<Adding :emailList="emailList" @listChanged="saveToStorage" />
+		<List :emailList="emailList" @listChanged="saveToStorage()" />
+		<Adding :emailList="emailList" @listChanged="saveToStorage()" />
 	</div>
 </template>
 
@@ -37,15 +37,16 @@ export default class Main extends Vue {
 	deserializeEmails() {
 		let storageArray = JSON.parse(Storage.load("emails"));
 		let emailList = [];
-
-		for (let i = 0; i < storageArray.length; i++) {
-			let newEmail = new Email(
-				storageArray[i].emailAddress,
-				storageArray[i].password,
-				storageArray[i].capacity
-			);
-			emailList.push(newEmail);
-		}
+		if (storageArray !== undefined && storageArray.length >= 0) {
+			for (let i = 0; i < storageArray.length; i++) {
+				let newEmail = new Email(
+					storageArray[i].emailAddress,
+					storageArray[i].password,
+					storageArray[i].capacity
+					);
+					emailList.push(newEmail);
+				}
+			}
 		return emailList;
 	}
 
