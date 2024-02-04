@@ -1,28 +1,33 @@
 <template>
 	<div>
-		<button @click="triggerPopup" v-if="showForm === false">
-			Dodaj skrzynkę
-		</button>
-		<br />
-		<br />
+		<div>
+			<button @click="triggerPopup" v-if="showForm === false">
+				Dodaj skrzynkę
+			</button>
+		</div>
 		<slot v-if="showForm === true">
-			Email:
-			<input type="text" v-model="userName" :class="classUserName" />@<select
-				v-model="domain"
-			>
-				<option v-for="domain in domainList" :key="domain">
-					{{ domain }}
-				</option>
-			</select>
-			<br />
-			Hasło:
-			<input :type="passwordType" v-model="password" :class="classPassword" />
-			<button @click="generatePassword">Generuj hasło</button>
-			<br />
-			Pojemność:
-			<input type="number" v-model="capacity" :class="classCapacity" /> GB
-			<br />
-			<button @click="triggerAdd">Dodaj</button>
+			<div>
+				Email:
+				<input type="text" v-model="userName" :class="classUserName" />@<select
+					v-model="domain"
+				>
+					<option v-for="domain in domainList" :key="domain">
+						{{ domain }}
+					</option>
+				</select>
+			</div>
+			<div>
+				Hasło:
+				<input :type="passwordType" v-model="password" :class="classPassword" />
+				<button @click="generatePassword">Generuj hasło</button>
+			</div>
+			<div>
+				Pojemność:
+				<input type="number" v-model="capacity" :class="classCapacity" /> GB
+			</div>
+			<div>
+				<button @click="triggerAdd">Dodaj</button>
+			</div>
 		</slot>
 	</div>
 </template>
@@ -157,7 +162,7 @@ export default class Adding extends Vue {
 			);
 			this.clearForm();
 			this.showForm = false;
-			this.$emit('listChanged')
+			this.$emit("listChanged");
 		} else {
 			this.checkValidation = true;
 		}
