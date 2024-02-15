@@ -8,7 +8,11 @@
 		<slot v-if="showForm === true">
 			<div>
 				Email:
-				<input type="text" v-model="userName" :class="classValidation(validationUserName)" />@<select v-model="domain">
+				<input
+					type="text"
+					v-model="userName"
+					:class="classValidation(validationUserName)"
+				/>@<select v-model="domain">
 					<option v-for="domain in domainList" :key="domain">
 						{{ domain }}
 					</option>
@@ -16,12 +20,21 @@
 			</div>
 			<div>
 				Hasło:
-				<input :type="passwordType" v-model="password" :class="classValidation(validationPassword)" />
+				<input
+					:type="passwordType"
+					v-model="password"
+					:class="classValidation(validationPassword)"
+				/>
 				<button @click="generatePassword">Generuj hasło</button>
 			</div>
 			<div>
 				Pojemność:
-				<input type="number" v-model="capacity" :class="classValidation(validationCapacity)"/> GB
+				<input
+					type="number"
+					v-model="capacity"
+					:class="classValidation(validationCapacity)"
+				/>
+				GB
 			</div>
 			<div>
 				<button @click="triggerAdd">Dodaj</button>
@@ -86,13 +99,11 @@ export default class Adding extends Vue {
 	}
 
 	validateAll() {
-		if (
+		return (
 			this.validationUserName === true &&
 			this.validationPassword === true &&
 			this.validationCapacity === true
-		) {
-			return true;
-		}
+		);
 	}
 
 	clearForm() {
