@@ -48,7 +48,7 @@ export default class Adding extends Vue {
 			userName: "",
 			domain: config.available_domains[0],
 			password: "",
-			capacity: 0,
+			capacity: undefined,
 			passwordType: "password",
 			generateRandomPassword: generateRandomPassword,
 			EmailValidation: EmailValidation,
@@ -59,11 +59,9 @@ export default class Adding extends Vue {
 	}
 
 	get validationUserName() {
-		console.log(this.userName);
 		return EmailValidation.userName(this.userName);
 	}
 	get validationPassword() {
-		console.log(this.password);
 		return EmailValidation.password(this.password);
 	}
 	get validationCapacity() {
@@ -80,7 +78,6 @@ export default class Adding extends Vue {
 	}
 
 	validateAll() {
-		console.log(this.validationUserName, this.validationPassword, this.validationCapacity)
 		if (
 			this.validationUserName === true &&
 			this.validationPassword === true &&
@@ -93,7 +90,7 @@ export default class Adding extends Vue {
 	clearForm() {
 		this.userName = "";
 		this.password = "";
-		this.capacity = 0;
+		this.capacity = undefined;
 		this.passwordType = "password";
 		this.showForm = false;
 	}
@@ -110,7 +107,6 @@ export default class Adding extends Vue {
 			this.$emit("listChanged");
 		}
 	}
-
 	generatePassword() {
 		this.passwordType = "text";
 		this.password = this.generateRandomPassword();
