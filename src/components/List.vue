@@ -32,17 +32,14 @@ import { Prop, Component } from "vue-property-decorator";
 	components: {},
 })
 export default class List extends Vue {
-	@Prop() emailList;
+	@Prop(Object) emailList;
 
 	data() {
 		return {};
 	}
 
 	get listEmpty() {
-		if (this.emailList.getEmails.length === 0) {
-			return true;
-		}
-		return false;
+			return (this.emailList.getEmails.length === 0)
 	}
 
 	deleteEmail(index) {

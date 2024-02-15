@@ -53,7 +53,7 @@ import config from "@/data/config.json";
 	components: {},
 })
 export default class Adding extends Vue {
-	@Prop() emailList;
+	@Prop(Object) emailList;
 
 	data() {
 		return {
@@ -65,7 +65,6 @@ export default class Adding extends Vue {
 			passwordType: "password",
 			generateRandomPassword: generateRandomPassword,
 			EmailValidation: EmailValidation,
-			checkValidation: false,
 			domainList: config.available_domains,
 			availableSpace: parseInt(config.available_space_GB),
 		};
