@@ -35,7 +35,7 @@ function generateRandomPassword() {
 			"y",
 			"z",
 		];
-		let signs = ["#", "$", "%", "!", "@", "^", "*", "&"];
+		let signs = ["#", "$", "%", "!", "@", "*", "&"];
 		let password = [];
 
 		for (let i = 0; i < 8; i++) {
@@ -45,7 +45,7 @@ function generateRandomPassword() {
 		let randomNumber = Math.floor(Math.random() * 10);
 		password.push(randomNumber);
 
-		let randomSign = signs[Math.floor(Math.random() * 8)];
+		let randomSign = signs[Math.floor(Math.random() * 7)];
 		password.push(randomSign);
 
 		password = shuffleArray(password);
