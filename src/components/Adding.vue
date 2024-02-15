@@ -8,9 +8,7 @@
 		<slot v-if="showForm === true">
 			<div>
 				Email:
-				<input type="text" v-model="userName" :class="classUserName" />@<select
-					v-model="domain"
-				>
+				<input type="text" v-model="userName" />@<select v-model="domain">
 					<option v-for="domain in domainList" :key="domain">
 						{{ domain }}
 					</option>
@@ -18,12 +16,12 @@
 			</div>
 			<div>
 				Hasło:
-				<input :type="passwordType" v-model="password" :class="classPassword" />
+				<input :type="passwordType" v-model="password" />
 				<button @click="generatePassword">Generuj hasło</button>
 			</div>
 			<div>
 				Pojemność:
-				<input type="number" v-model="capacity" :class="classCapacity" /> GB
+				<input type="number" v-model="capacity" /> GB
 			</div>
 			<div>
 				<button @click="triggerAdd">Dodaj</button>
@@ -50,55 +48,27 @@ export default class Adding extends Vue {
 			userName: "",
 			domain: config.available_domains[0],
 			password: "",
-			capacity: undefined,
+			capacity: 0,
 			passwordType: "password",
 			generateRandomPassword: generateRandomPassword,
 			EmailValidation: EmailValidation,
 			checkValidation: false,
 			domainList: config.available_domains,
 			availableSpace: parseInt(config.available_space_GB),
-			omitValidationPassword: "",
 		};
 	}
 
-	validation(type, ...data) {
-		return EmailValidation[type](this[type], ...data);
-	}
 	get validationUserName() {
-		return this.validation("userName");
+		console.log(this.userName);
+		return EmailValidation.userName(this.userName);
 	}
 	get validationPassword() {
-		if (this.password === this.omitValidationPassword) return true;
-		return this.validation("password");
+		console.log(this.password);
+		return EmailValidation.password(this.password);
 	}
-
 	get validationCapacity() {
-		return this.validation(
-			"capacity",
-			this.emailList.calculateUsedSpace(),
-			this.availableSpace
-		);
-	}
-
-	validationClass(type, ...data) {
-		if (this.checkValidation === false) {
-			return "";
-		}
-		if (this.validation(type, ...data)) {
-			return "valid";
-		} else {
-			return "non-valid";
-		}
-	}
-	get classUserName() {
-		return this.validationClass("userName");
-	}
-	get classPassword() {
-		return this.validationClass("password");
-	}
-	get classCapacity() {
-		return this.validationClass(
-			"capacity",
+		return EmailValidation.capacity(
+			this.capacity,
 			this.emailList.calculateUsedSpace(),
 			this.availableSpace
 		);
@@ -110,27 +80,26 @@ export default class Adding extends Vue {
 	}
 
 	validateAll() {
+		console.log(this.validationUserName, this.validationPassword, this.validationCapacity)
 		if (
-			this.validationUserName &&
-			this.validationPassword &&
-			this.validationCapacity
+			this.validationUserName === true &&
+			this.validationPassword === true &&
+			this.validationCapacity === true
 		) {
 			return true;
-		} else {
-			return false;
 		}
 	}
 
 	clearForm() {
 		this.userName = "";
-		(this.password = ""), (this.capacity = undefined);
-		this.checkValidation = false;
+		this.password = "";
+		this.capacity = 0;
 		this.passwordType = "password";
-		this.omitValidationPassword = "";
+		this.showForm = false;
 	}
 
 	triggerAdd() {
-		if (this.validateAll()) {
+		if (this.validateAll() === true) {
 			this.emailList.add(
 				this.userName,
 				this.domain,
@@ -138,18 +107,13 @@ export default class Adding extends Vue {
 				this.capacity
 			);
 			this.clearForm();
-			this.showForm = false;
 			this.$emit("listChanged");
-		} else {
-			this.checkValidation = true;
 		}
 	}
 
 	generatePassword() {
 		this.passwordType = "text";
-		let newPassword = this.generateRandomPassword();
-		this.password = newPassword;
-		this.omitValidationPassword = newPassword; // no nie mialem innego pomyslu jak to naprawic
+		this.password = this.generateRandomPassword();
 	}
 }
 </script>
