@@ -36,8 +36,9 @@ export default class Main extends Vue {
 
 	deserializeEmails() {
 		let storageArray = JSON.parse(Storage.load("emails"));
+		console.log(storageArray);
 		let emailList = [];
-		if (storageArray !== undefined && storageArray.length >= 0) {
+		if (storageArray !== null && storageArray.length >= 0) {
 			for (let i = 0; i < storageArray.length; i++) {
 				let newEmail = new Email(
 					storageArray[i].emailAddress,
