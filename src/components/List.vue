@@ -32,7 +32,7 @@ import { Prop, Component } from "vue-property-decorator";
 	components: {},
 })
 export default class List extends Vue {
-	@Prop(Object) emailList;
+	@Prop(Object) EmailList;
 
 	data() {
 		return {};
