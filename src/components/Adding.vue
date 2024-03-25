@@ -53,7 +53,7 @@ import config from "@/data/config.json";
 	components: {},
 })
 export default class Adding extends Vue {
-	@Prop(Object) emailList;
+	@Prop(Object) EmailList;
 
 	data() {
 		return {
