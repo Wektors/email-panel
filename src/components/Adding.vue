@@ -48,12 +48,13 @@ import { Prop, Component } from "vue-property-decorator";
 import generateRandomPassword from "@/js/generateRandomPassword";
 import EmailValidation from "@/js/EmailValidation.js";
 import config from "@/data/config.json";
+import EmailList from "@/js/EmailList";
 
 @Component({
 	components: {},
 })
 export default class Adding extends Vue {
-	@Prop(Object) EmailList;
+	@Prop(EmailList) emailList;
 
 	data() {
 		return {

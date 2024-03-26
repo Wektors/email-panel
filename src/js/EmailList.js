@@ -9,7 +9,7 @@ export default class EmailList {
 		this.emails.push(new Email(userName + "@" + domain, password, capacity));
 	}
 
-	get getEmails() {
+	get Emails() {
 		return this.emails;
 	}
 

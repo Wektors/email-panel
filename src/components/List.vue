@@ -7,7 +7,7 @@
 				<th>Usuń</th>
 			</tr>
 			<tr
-				v-for="({ emailAddress, capacity, key }, index) in emailList.getEmails"
+				v-for="({ emailAddress, capacity, key }, index) in emailList.Emails"
 				:key="key"
 			>
 				<td>{{ index + 1 }}</td>
@@ -27,25 +27,26 @@
 <script>
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
+import EmailList from "@/js/EmailList";
 
 @Component({
 	components: {},
 })
 export default class List extends Vue {
-	@Prop(Object) EmailList;
+	@Prop(EmailList) emailList;
 
 	data() {
 		return {};
 	}
 
 	get listEmpty() {
-			return (this.emailList.getEmails.length === 0)
+		return this.emailList.Emails.length === 0;
 	}
 
 	deleteEmail(index) {
 		if (confirm("Czy na pewno?")) {
 			this.emailList.deleteEmail(index);
-			this.$emit('listChanged')
+			this.$emit("listChanged");
 		}
 	}
 }
